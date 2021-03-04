@@ -7,6 +7,7 @@ import json
 import re
 import requests
 
+
 URL = 'http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
 
 SUBGRUPOS = ["Recepción", "Elaboración", "Gestionar", "Expediente", "Firmador", "Archivar"]
@@ -34,4 +35,9 @@ for group in groups['list']['entries']:
         else:
             if len(result)==3: # ABC-DEF-HIG-Palabra
                 for newgrp in SUBGRUPOS:
-                    print("Creando grupo llamado: " + result[0] + "-" + result[1] + '-' + result[2] + "-" + newgrp) # pylint: disable=line-too-long
+                    string=result[0] + "-" + result[1] + '-' + result[2] + "-" + newgrp
+                    print("Creando grupo llamado: ", string)
+                    post_data='{"id": "' + string + '", "displayName": "' + string + '"}'
+                    print(post_data)
+                    #response = requests.post(URL, data=post_data, headers=headers)
+                    #print(response.text)
