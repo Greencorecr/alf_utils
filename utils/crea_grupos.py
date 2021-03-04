@@ -27,7 +27,7 @@ for group in groups['list']['entries']:
     #print(group['entry']['displayName'])
     new_string = re.sub('\n', '', group['entry']['displayName'])
     result = re.split('-', new_string)
-    if len(result[0]) == 3 and result[len(result-1)] not in EXCEPCIONES: # ABC- in pattern
+    if len(result[0]) == 3 and result[len(result)-1] not in EXCEPCIONES: # ABC- in pattern
         if len(result)==2:  # ABC-DEF-palabra
             for newgrp in SUBGRUPOS:
                 print("Creando grupo llamado: " + result[0] + "-" + result[1] + "-" + newgrp)
