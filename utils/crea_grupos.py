@@ -4,8 +4,8 @@ Utilitario para crear grupos dependiendo de ciertos parámetros
 
 import base64
 import json
-import requests
 import re
+import requests
 
 URL = 'http://172.20.1.4:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
 
@@ -32,4 +32,4 @@ for group in groups['list']['entries']:
         else:
             if len(result)==3:
                 for newgrp in SUBGRUPOS:
-                    print("Creando grupo llamado: " + result[0] + "-" + result[1] + '-' + result[2] + "-" + newgrp)
+                    print("Creando grupo llamado: " + result[0] + "-" + result[1] + '-' + result[2] + "-" + newgrp) # pylint: disable=line-too-long
