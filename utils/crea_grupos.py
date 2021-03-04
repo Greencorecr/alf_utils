@@ -7,9 +7,11 @@ import json
 import re
 import requests
 
-URL = 'http://172.20.1.4:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
+URL = 'http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
 
 SUBGRUPOS = ["Recepción", "Elaboración", "Gestionar", "Expediente", "Firmador", "Archivar"]
+EXCEPCIONES = ["CHOFER", "SECRETARIA"]
+
 
 USER = 'admin'
 PASSWD = 'admin'
@@ -25,11 +27,11 @@ for group in groups['list']['entries']:
     #print(group['entry']['displayName'])
     new_string = re.sub('\n', '', group['entry']['displayName'])
     result = re.split('-', new_string)
-    if len(result[0]) == 3:
-        if len(result)==2:
+    if len(result[0]) == 3 and result[len(result-1)] not in EXCEPCIONES: # ABC- in pattern
+        if len(result)==2:  # ABC-DEF-palabra
             for newgrp in SUBGRUPOS:
                 print("Creando grupo llamado: " + result[0] + "-" + result[1] + "-" + newgrp)
         else:
-            if len(result)==3:
+            if len(result)==3: # ABC-DEF-HIG-Palabra
                 for newgrp in SUBGRUPOS:
                     print("Creando grupo llamado: " + result[0] + "-" + result[1] + '-' + result[2] + "-" + newgrp) # pylint: disable=line-too-long
