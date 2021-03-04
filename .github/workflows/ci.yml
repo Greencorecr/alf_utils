@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+  check_suite:
+    type: [rerequested]
+
+jobs:
+  alfresco-monilitic-testing:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.PAT }}
+        submodules: recursive
+    - name: Pylint checks
+      run: |
+        sudo pip3 install pylint
+        pylint utils/*.py
