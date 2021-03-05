@@ -6,3 +6,5 @@ tar xJf template.tar.xz
 cd /opt/alfresco
 find . -print -exec chown --reference=/tmp/alfresco-perms/{} {} \; 2> /dev/null
 chown -R alfresco:alfresco /opt/alfresco/alf_data
+chown -R alfresco:alfresco /opt/alfresco/logs/
+
