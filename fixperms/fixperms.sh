@@ -5,6 +5,8 @@ wget https://github.com/Greencorecr/alf_utils/raw/main/fixperms/template.tar.xz
 tar xJf template.tar.xz
 cd /opt/alfresco
 find . -print -exec chown --reference=/tmp/alfresco-perms/{} {} \; 2> /dev/null
+find . -print -exec chmod --reference=/tmp/alfresco-perms/{} {} \; 2> /dev/null
+find /opt/alfresco -uid 109 -exec echo chown alfresco:alfresco {} \;
 
 chown -R alfresco:alfresco /opt/alfresco/alf_data
 chown -R alfresco:alfresco /opt/alfresco/logs/
