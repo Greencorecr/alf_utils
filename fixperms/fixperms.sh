@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 apt-get -qy install wkhtmltopdf
-if [ -L /usr/local/bin/wkhtmltopdf ]; then
+if [ ! -L /usr/local/bin/wkhtmltopdf ]; then
   ln -s /usr/bin/wkhtmltopdf /usr/local/bin/
 fi
 
