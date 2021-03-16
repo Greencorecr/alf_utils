@@ -20,3 +20,6 @@ chown -f -R alfresco:alfresco /opt/alfresco/logs/solr6
 chmod -f -R 755 /opt/alfresco/alf_data
 chmod -f -R 2755 /opt/alfresco/alf_data/solr6/{content,models,index,solrhome}
 chmod -f -R 2755 /opt/alfresco/logs/solr6
+if [ -z /opt/alfresco/solr6/solr/bin/*pid ]; then
+  chown -f alfresco:alfresco /opt/alfresco/solr6/solr/bin/*pid
+fi
