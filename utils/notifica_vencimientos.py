@@ -38,4 +38,6 @@ with open('vencimientos.csv', newline='') as csvfile:
                     now = datetime.datetime.now(pytz.utc)
                     file_stale = int((now-file_time).seconds/60)
                     if file_stale > int(meses):
-                        print(leaf_file['entry']['name'], str(file_time) + " min:" +str(file_stale))
+                        print('''Email text ''' +
+                        leaf_file['entry']['name'], " min:" +
+                        str(file_stale) + " Email: " + row['correo'])
