@@ -16,6 +16,9 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
+    - name: Pip installs
+      run: |
+        sudo pip3 install dateutil.parser pytz
     - name: Pylint checks
       run: |
         sudo pip3 install pylint
