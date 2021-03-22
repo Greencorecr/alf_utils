@@ -6,13 +6,45 @@ Lee de un archivo CSV (ver examples/) las reglas a ejecutar, y la lista de de di
 import csv
 import json
 import datetime
+import smtplib
 import dateutil.parser
 import requests
 import pytz
+
 import alflib
 
-HOSTNAME = '172.20.1.4'
+HOSTNAME = '10.42.25.237'
 URLAPI = ':8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/'
+
+DOCLINK = ':8080/share/page/site/rncr/document-details?nodeRef=workspace://SpacesStore/'
+LINKTOP = 'http://' + HOSTNAME + DOCLINK
+
+MESSAGEFROM = """From: Gestor Documental <pruebagestordocumentalrn@rnp.go.cr>
+To: """
+
+MESSAGETOP = """Subject: Vencimiento de documento
+
+El documento de nombre: """
+
+
+MESSAGEMID=""", se encuentra vencido.
+
+Realice click en este enlace para atenderlo.
+
+"""
+
+def envia_correo_verificacion(receiver, send_message):
+    '''
+    Función para enviar correos con mensaje específico
+    de notificación de vencimiento de documento.
+    '''
+    sender = 'pruebagestordocumentalrn@rnp.go.cr'
+    try:
+        smtp_obj = smtplib.SMTP('localhost',1025)
+        smtp_obj.sendmail(sender, receiver, send_message.encode("utf8"))
+        #print ("Successfully sent email")
+    except ValueError:
+        print ("Error: unable to send email")
 
 with open('vencimientos.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -27,10 +59,17 @@ with open('vencimientos.csv', newline='') as csvfile:
             if leaf_files['list']['pagination']['count'] > 0:
                 meses = row[subdir['entry']['name'].lower()]
                 for leaf_file in leaf_files['list']['entries']:
+                    #print(leaf_file)
                     file_time = dateutil.parser.parse(leaf_file['entry']['modifiedAt'])
                     now = datetime.datetime.now(pytz.utc)
-                    file_stale = int((now-file_time).seconds/60)
-                    if file_stale > int(meses):
-                        print('''Email text ''' +
-                        leaf_file['entry']['name'], " min:" +
-                        str(file_stale) + " Email: " + row['correo'])
+                    file_stale = float((now-file_time).seconds/60/60/24/30)
+                    if file_stale > float(meses):
+                        #print('''Email text ''' +
+                        #leaf_file['entry']['name'], " min:" +
+                        #str(file_stale) + " Email: " + row['correo'])
+                        link = LINKTOP + leaf_file['entry']['id']
+                        f_name = leaf_file['entry']['name']
+                        f_id = leaf_file['entry']['id']
+                        message = MESSAGETOP + f_name + MESSAGEMID + LINKTOP + f_id
+                        #print(message)
+                        envia_correo_verificacion(row['correo'], message)
