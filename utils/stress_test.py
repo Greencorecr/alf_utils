@@ -7,7 +7,7 @@ import os
 import json
 import random
 
-HOST = '10.42.25.237'
+HOST = 'localhost'
 NODE_URL = 'nodes/-root-/children'
 URL = 'http://' + HOST + ':8080/alfresco/api/-default-/public/alfresco/versions/1/' + NODE_URL
 CURL_OPTS1 = ' -X POST -F filedata=@./testfile -F "nodeType=cm:content" -F "cm:title=My text" '
@@ -34,7 +34,7 @@ last_file = json.loads(result)
 
 
 CURL_OPTS1 = 'curl -s -X GET --output /dev/null '
-URL = 'http://10.42.25.237:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + last_file['entry']['id'] + '/content'
+URL = 'http://' + HOST + ':8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + last_file['entry']['id'] + '/content'
 print("Prueba de bajada. Descargando el archivo recién subido, de 50MiB, 25 veces")
 test_start_time = time.time()
 
