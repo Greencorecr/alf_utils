@@ -52,7 +52,10 @@ class AlfrescoBot():
       time.sleep(5)
 
   def borra_r(self):
-      elem = self.driver.find_element_by_partial_link_text("R-")
+      try:
+          elem = self.driver.find_element_by_partial_link_text("R-")
+      except:
+          return False
       elem.click()
       time.sleep(6)
       elem = self.driver.find_element_by_xpath("/html/body/div[4]/div[1]/div[2]/div[4]/div[2]/div/div/div/div/div[1]/span[2]/span")
@@ -60,6 +63,7 @@ class AlfrescoBot():
       time.sleep(2)
       elem = self.driver.find_element_by_xpath('//*[@id="yui-gen7-button"]')
       elem.click()
+      return True
 
   def goto_rules(self, dir_id):
     self.driver = webdriver.Firefox()
@@ -83,9 +87,10 @@ def recursive_search(search_data):
                 print(dir_id, dir_name)
                 bot.goto_rules(dir_id)
                 bot.login()
-                while True:
+                borrado=True
+                while borrado:
                     time.sleep(5)
-                    bot.borra_r()
+                    borrado=bot.borra_r()
                     bot.reload()
             URL = 'http://' + HOST + ':8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + dir_id + '/children'
             response = requests.get(URL,headers=alflib.headers)
