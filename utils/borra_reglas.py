@@ -35,10 +35,10 @@ class AlfrescoBot():
         elem = self.driver.find_element_by_name("username")
         #print(elem)
         elem.clear()
-        elem.send_keys(secrets.username)
+        elem.send_keys(secrets.USERNAME)
         elem = self.driver.find_element_by_name("password")
         elem.clear()
-        elem.send_keys(secrets.password)
+        elem.send_keys(secrets.PASSWORD)
         elem.send_keys(Keys.RETURN)
 
     def borra_r(self):

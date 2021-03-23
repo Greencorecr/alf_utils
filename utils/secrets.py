@@ -1,2 +1,5 @@
-username = 'admin'
-password = 'admin'
+'''
+Password file for Alfresco
+'''
+USERNAME = 'admin'
+PASSWORD = 'admin'
