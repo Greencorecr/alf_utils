@@ -101,9 +101,9 @@ def recursive_search(search_data):
                 borrado=True
                 while borrado:
                     time.sleep(5)
-                    print(borrado)
                     borrado=bot.borra_r()
                     bot.reload()
+                bot.close()
             url = 'http://' + HOST + URL_API + 'nodes/' + dir_id + '/children'
             new_response = requests.get(url,headers=alflib.headers)
             subsearch = json.loads(new_response.text)
@@ -113,7 +113,8 @@ bot = AlfrescoBot()
 
 ROOTID='345185be-f20f-474f-b23f-9768ae70e851'
 
-URL = 'http://' + HOST + URL_API + '/nodes/' + ROOTID + '/children'
+URL = 'http://' + HOST + URL_API + 'nodes/' + ROOTID + '/children'
+print(URL)
 response = requests.get(URL,headers=alflib.headers)
 search = json.loads(response.text)
 
