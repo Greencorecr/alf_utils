@@ -44,7 +44,6 @@ for _ in range(1, 25):
     start_time = time.time()
     RAND = str(random.randint(0, 10000))
     CURL_CMD = CURL_OPTS1 + AUTH + URL
-    print(CURL_CMD)
     result = os.popen(CURL_CMD).read()
     test_time = time.time() - start_time
     if test_time > 5:
