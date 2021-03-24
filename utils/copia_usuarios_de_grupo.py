@@ -21,4 +21,4 @@ for user in old_group['list']['entries']:
     post_data='{"id": "' + user['entry']['id'] + '", "memberType": "PERSON"}'
     URL = 'http://' + HOST + URL_API + 'groups/' + NEWGRP + '/members'
     response = requests.post(URL, data=post_data, headers=alflib.headers)
-    #print(response.text)
+    print(response.text)
