@@ -5,6 +5,7 @@ Lee de un archivo CSV (ver examples/) las reglas a ejecutar, y la lista de de di
 
 import csv
 import json
+import os
 import datetime
 import smtplib
 import dateutil.parser
@@ -32,6 +33,16 @@ MESSAGEMID=""", se encuentra vencido.
 Realice click en este enlace para atenderlo.
 
 """
+# Meses
+#TIME_DIVIDER = 60/60/24/30
+
+# Años
+TIME_DIVIDER = 60/60/24/30/12
+
+# Minutos, para pruebas
+#TIME_DIVIDER = 60
+
+CONFIG_DOC = "892c9e2d-ab8c-4b83-b0af-f14b4375b079"
 
 def envia_correo_verificacion(receiver, send_message):
     '''
@@ -45,6 +56,21 @@ def envia_correo_verificacion(receiver, send_message):
         #print ("Successfully sent email")
     except ValueError:
         print ("Error: unable to send email")
+
+def descarga_csv():
+    '''
+    Aquí borramos el CSV si existe, y lo descargamos de alfresco, usando el
+    id de documento definido en CONFIG_DOC
+    '''
+    curl_opts1 = 'curl -s -X GET --output vencimientos.csv '
+    url_api = '/alfresco/api/-default-/public/alfresco/versions/1/'
+    auth = ' -H "Authorization: Basic YWRtaW46YWRtaW4=" '
+    url = 'http://' + HOSTNAME + ':8080' + url_api + 'nodes/' + CONFIG_DOC + '/content'
+    curl_cmd = curl_opts1 + auth + url
+    result = os.popen(curl_cmd).read()
+    print(result)
+
+descarga_csv()
 
 with open('vencimientos.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -62,7 +88,7 @@ with open('vencimientos.csv', newline='') as csvfile:
                     #print(leaf_file)
                     file_time = dateutil.parser.parse(leaf_file['entry']['modifiedAt'])
                     now = datetime.datetime.now(pytz.utc)
-                    file_stale = float((now-file_time).seconds/60/60/24/30)
+                    file_stale = float((now-file_time).seconds/TIME_DIVIDER)
                     if file_stale > float(meses):
                         #print('''Email text ''' +
                         #leaf_file['entry']['name'], " min:" +
