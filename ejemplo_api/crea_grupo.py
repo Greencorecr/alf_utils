@@ -7,8 +7,7 @@ import re
 import requests
 import alflib
 
-#URL = 'http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
-URL = 'http://10.42.25.183:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
+URL = 'http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/groups'
 
 string="GrupoPrueba"
 
